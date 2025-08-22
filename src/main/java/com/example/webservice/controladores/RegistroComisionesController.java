@@ -1,46 +1,47 @@
 package com.example.webservice.controladores;
 
 
-import com.example.webservice.entidades.ComisionesTarjetas;
-import com.example.webservice.repository.ComisionesTarjetasRepository;
+import com.example.webservice.entidades.RegistroComisiones;
+import com.example.webservice.repository.RegistroComisionesRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/comisiones-tarjetas")
-public class ComisionesTarjetasController {
+@RequestMapping("/api/registro-comisiones")
+public class RegistroComisionesController {
 
-    private final ComisionesTarjetasRepository repository;
+    private final RegistroComisionesRepository repository;
 
-    public ComisionesTarjetasController(ComisionesTarjetasRepository repository) {
+    public RegistroComisionesController(RegistroComisionesRepository repository) {
         this.repository = repository;
     }
 
     @GetMapping
-    public List<ComisionesTarjetas> getAll() {
+    public List<RegistroComisiones> getAll() {
         return repository.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ComisionesTarjetas> getById(@PathVariable Integer id) {
+    public ResponseEntity<RegistroComisiones> getById(@PathVariable Integer id) {
         return repository.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ComisionesTarjetas create(@RequestBody ComisionesTarjetas comision) {
-        return repository.save(comision);
+    public RegistroComisiones create(@RequestBody RegistroComisiones registro) {
+        return repository.save(registro);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ComisionesTarjetas> update(@PathVariable Integer id, @RequestBody ComisionesTarjetas updated) {
+    public ResponseEntity<RegistroComisiones> update(@PathVariable Integer id, @RequestBody RegistroComisiones updated) {
         return repository.findById(id)
                 .map(existing -> {
-                    existing.setTipoTarjeta(updated.getTipoTarjeta());
-                    existing.setPorcentajeComision(updated.getPorcentajeComision());
+                    existing.setValorCobrado(updated.getValorCobrado());
+                    existing.setComision(updated.getComision());
+                    existing.setEntrada(updated.getEntrada());
                     return ResponseEntity.ok(repository.save(existing));
                 })
                 .orElse(ResponseEntity.notFound().build());

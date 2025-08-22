@@ -1,4 +1,4 @@
-package com.example.webservice.controller;
+package com.example.webservice.controladores;
 
 import com.example.webservice.entidades.Tematicas;
 import com.example.webservice.repository.TematicasRepository;
